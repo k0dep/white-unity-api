@@ -5,7 +5,7 @@ steps:
 - task: DotNetCoreCLI@2
   inputs:
     command: 'restore'
-    projects: './Functions/AzureFunctionsTest.csproj'
+    projects: '$(Build.BinariesDirectory)/Functions/AzureFunctionsTest.csproj'
     feedsToUse: 'select'
     versioningScheme: 'off'
 
@@ -13,7 +13,7 @@ steps:
   inputs:
     command: 'publish'
     publishWebProjects: false
-    projects: './Functions/AzureFunctionsTest.csproj'
+    projects: '$(Build.BinariesDirectory)/Functions/AzureFunctionsTest.csproj'
     arguments: '-c Release -o ../build'
     feedsToUse: 'select'
     versioningScheme: 'off'
