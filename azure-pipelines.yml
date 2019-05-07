@@ -14,6 +14,14 @@ steps:
     command: 'publish'
     publishWebProjects: false
     projects: './Functions/AzureFunctionsTest.csproj'
-    arguments: '-c Release'
+    arguments: '-c Release -o ../build'
     feedsToUse: 'select'
     versioningScheme: 'off'
+
+- task: ArchiveFiles@2
+  inputs:
+    rootFolderOrFile: '$(Build.BinariesDirectory)/build'
+    includeRootFolder: true
+    archiveType: 'zip'
+    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+    replaceExistingArchive: true
