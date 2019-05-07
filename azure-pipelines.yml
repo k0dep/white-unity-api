@@ -2,11 +2,13 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
+
 - task: DotNetCoreCLI@2
   inputs:
     command: 'restore'
     projects: '$(Build.BinariesDirectory)/Functions/AzureFunctionsTest.csproj'
     feedsToUse: 'select'
+    verbosityRestore: 'Diagnostic'
     versioningScheme: 'off'
 
 - task: DotNetCoreCLI@2
@@ -16,6 +18,7 @@ steps:
     projects: '$(Build.BinariesDirectory)/Functions/AzureFunctionsTest.csproj'
     arguments: '-c Release -o ../build'
     feedsToUse: 'select'
+    verbosityRestore: 'Diagnostic'
     versioningScheme: 'off'
 
 - task: ArchiveFiles@2
