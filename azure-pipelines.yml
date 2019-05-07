@@ -23,8 +23,8 @@ steps:
 
 - task: ArchiveFiles@2
   inputs:
-    rootFolderOrFile: '$(Build.BinariesDirectory)/build'
+    rootFolderOrFile: 'build'
     includeRootFolder: true
     archiveType: 'zip'
-    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+    archiveFile: '$(Build.ArtifactStagingDirectory)/AzureFunctionsTest-$(Build.BuildId).zip'
     replaceExistingArchive: true
