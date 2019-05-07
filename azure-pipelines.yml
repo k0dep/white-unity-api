@@ -8,7 +8,6 @@ steps:
     command: 'restore'
     projects: 'Functions/AzureFunctionsTest.csproj'
     feedsToUse: 'select'
-    verbosityRestore: 'Diagnostic'
     versioningScheme: 'off'
 
 - task: DotNetCoreCLI@2
@@ -17,8 +16,9 @@ steps:
     publishWebProjects: false
     projects: 'Functions/AzureFunctionsTest.csproj'
     arguments: '-c Release -o ../build'
+    zipAfterPublish: false
+    modifyOutputPath: false
     feedsToUse: 'select'
-    verbosityRestore: 'Diagnostic'
     versioningScheme: 'off'
 
 - task: ArchiveFiles@2
