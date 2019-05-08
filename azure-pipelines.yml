@@ -26,11 +26,20 @@ steps:
     rootFolderOrFile: 'build'
     includeRootFolder: false
     archiveType: 'zip'
-    archiveFile: '$(Build.ArtifactStagingDirectory)/AzureFunctionsTest-$(Build.BuildId).zip'
+    archiveFile: '$(Build.ArtifactStagingDirectory)/white-unity-functions.zip'
     replaceExistingArchive: true
 
 - task: PublishBuildArtifacts@1
   inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)/AzureFunctionsTest-$(Build.BuildId).zip'
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
     ArtifactName: 'AzureFunctionsTest'
     publishLocation: 'Container'
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'custom'
+    projects: ''
+    custom: 'ef'
+    arguments: 'migrations script -i -o $(Build.ArtifactStagingDirectory)/migrations.sql'
+    feedsToUse: 'select'
+    versioningScheme: 'off'
