@@ -40,6 +40,6 @@ steps:
     command: 'custom'
     projects: ''
     custom: 'ef'
-    arguments: 'migrations script -i -o $(Build.ArtifactStagingDirectory)/migrations.sql'
+    arguments: 'migrations script -i -o $(Build.ArtifactStagingDirectory)/migrations.sql --project DataAccess/DataAccess.csproj --startup-project DataAccess/DataAccess.csproj'
     feedsToUse: 'select'
     versioningScheme: 'off'
