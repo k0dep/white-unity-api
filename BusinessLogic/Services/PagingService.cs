@@ -15,11 +15,6 @@ namespace WhiteUnity.BusinessLogic
         {
         }
         
-        public PagingService(int pageDefaultCount)
-        {
-            PageDefaultCount = pageDefaultCount;
-        }
-        
         public async Task<PagingResultDto<TResult>> Paging<TResult>(IQueryable<TResult> collection, PageRequestDto pageParams)
         {
             var count = collection.Count();

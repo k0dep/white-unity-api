@@ -5,7 +5,7 @@ services:
     container_name: mssql
     image: mcr.microsoft.com/mssql/server
     environment:
-      SA_PASSWORD: SuperDuperPa$$wo3d
+      SA_PASSWORD: 'SuperDuperPa#wo3d'
       MSSQL_PID: Express
       ACCEPT_EULA: Y
     ports:

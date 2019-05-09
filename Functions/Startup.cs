@@ -31,9 +31,15 @@ namespace WhiteUnity
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IRepository<PackageModel>, EfRepository<PackageModel>>();
 
-            services.AddTransient<IPagingService, PagingService>();
+            services.AddScoped<IPagingService, PagingService>();
 
-            services.AddTransient<IPackageSearchService, PackageSearchService>();
+            services.AddScoped<IPackageSearchService>(ctx => {
+                var r = ctx.GetService<IRepository<PackageModel>>();
+                var m = ctx.GetService<IMapper>();
+                var p = ctx.GetService<IPagingService>();
+
+                return new PackageSearchService(r, m, p);
+            });
 
             services.AddDbContext<PackagesDbContext>(options => {
                 var config = new ConfigurationBuilder()
@@ -45,6 +51,8 @@ namespace WhiteUnity
                 var connectionString = config["SqlConnectionString"];
                 options.UseSqlServer(connectionString);
             });
+
+            services.AddScoped<DbContext>(ctx => ctx.GetService<PackagesDbContext>());
         }
     }
 }

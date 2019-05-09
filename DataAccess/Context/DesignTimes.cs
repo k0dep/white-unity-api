@@ -11,7 +11,7 @@ namespace WhiteUnity.DataAccess.Context
         public PackagesDbContext CreateDbContext(string[] args)
         {
             var builder = new DbContextOptionsBuilder<PackagesDbContext>();
-            var connectionString = "Server=tcp:localhost,1433;User ID=SA;Password=SuperDuperPa$$wo3d";
+            var connectionString = "Server=tcp:localhost,1433;User ID=SA;Password=SuperDuperPa#wo3d";
             builder.UseSqlServer(connectionString);
             return new PackagesDbContext(builder.Options);
         }
