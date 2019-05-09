@@ -1,7 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace AzureFunctionsTest.DataAccess.Models
+namespace WhiteUnity.DataAccess.Models
 {
     public class PackageModel
     {
@@ -12,6 +12,10 @@ namespace AzureFunctionsTest.DataAccess.Models
         [Required]
         public string Name { get; set; }
 
+        [MaxLength(200)]
+        [Required]
+        public string FullName { get; set; }
+
         [MaxLength(250)]
         [Required]
         public string ProjectUrl { get; set; }
@@ -21,8 +25,7 @@ namespace AzureFunctionsTest.DataAccess.Models
         public string UrlForManifest { get; set; }
 
         public DateTime AddedTimestamp { get; set; }
+        
         public int LooksCount { get; set; }
-
-        public int LooksCount2 { get; set; }
     }
 }

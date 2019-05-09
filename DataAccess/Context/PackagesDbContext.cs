@@ -1,7 +1,7 @@
-using AzureFunctionsTest.DataAccess.Models;
+using WhiteUnity.DataAccess.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace AzureFunctionsTest.DataAccess.Context
+namespace WhiteUnity.DataAccess.Context
 {
     public class PackagesDbContext : DbContext
     {
