@@ -38,14 +38,12 @@ namespace WhiteUnity
             services.AddTransient<IPagingService, PagingService>();
 
             services.AddTransient<IPackageSearchService, PackageSearchService>();
+            services.AddTransient<IPackageGlobalSearchService, PackageGlobalSearchService>();
+            services.AddTransient<IPackageCreateService, PackageCreateService>();
 
             services.AddDbContext<PackagesDbContext>(options =>
             {
-                var config = new ConfigurationBuilder()
-                    .SetBasePath(Environment.CurrentDirectory)
-                    .AddJsonFile("local.settings.json", optional: true, reloadOnChange: true)
-                    .AddEnvironmentVariables()
-                    .Build();
+                var config = GetConfig();
 
                 var connectionString = config["SqlConnectionString"];
                 options.UseSqlServer(connectionString);
@@ -53,6 +51,14 @@ namespace WhiteUnity
 
             services.AddTransient<DbContext>(ctx => ctx.GetService<PackagesDbContext>());
 
+            services.AddTransient<IConfiguration>(ctx => GetConfig());
         }
+
+        private IConfiguration GetConfig() => new ConfigurationBuilder()
+            .SetBasePath(Environment.CurrentDirectory)
+            .AddJsonFile("local.settings.json", optional: true, reloadOnChange: true)
+            .AddEnvironmentVariables()
+            .Build();
+
     }
 }
