@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using WhiteUnity.DataAccess.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,6 +10,7 @@ namespace WhiteUnity.DataAccess.Context
 
         public PackagesDbContext(DbContextOptions<PackagesDbContext> dbContextOptions) : base(dbContextOptions)
         {
+            Debug.WriteLine("Context created");
         }
     }
 }

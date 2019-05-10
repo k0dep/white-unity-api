@@ -1,3 +1,4 @@
+using System.Net.Http;
 using System;
 using System.IO;
 using System.Threading.Tasks;
@@ -10,32 +11,29 @@ using Newtonsoft.Json;
 using WhiteUnity.DataAccess.Context;
 using WhiteUnity.BusinessLogic.Abstractions;
 using WhiteUnity.BusinessLogic;
+using WhiteUnity.BusinessLogic.Objects;
 using Willezone.Azure.WebJobs.Extensions.DependencyInjection;
 
 namespace k0dep.test1
 {
-    public static class MatchPackageFunction
+    public static class SearchPackagesFunction
     {
-        [FunctionName("match")]
+        [FunctionName("search")]
         public static async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "match/{name}")] HttpRequest req,
+            [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)] HttpRequestMessage req,
             ILogger log,
-            string name,
             [Inject] IPackageSearchService packageSearch
-        ){
-            if(name == null)
+        )
+        {
+            var data = await req.Content.ReadAsAsync<PackageSearchRequestDto>();
+            if(data == null)
             {
-                return new BadRequestResult();
+                return new BadRequestObjectResult(new {
+                    Error = "bad request"
+                });
             }
 
-            var package = await packageSearch.BestMatch(name);
-
-            if (package == null)
-            {
-                return new NotFoundResult();
-            }
-
-            return new OkObjectResult(package);
+            return new OkObjectResult(await packageSearch.Search(data));
         }
     }
 }
