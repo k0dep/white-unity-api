@@ -31,11 +31,13 @@ namespace WhiteUnity.BusinessLogic.Services
                 .SingleOrDefaultAsync();
         }
 
-        public async Task<PagingResultDto<PackageInfoDto>> Search(PageRequestDto page, string query)
+        public async Task<PagingResultDto<PackageInfoDto>> Search(PackageSearchRequestDto filter)
         {
-            var result = _packageRepo.Get(p => p.Name.Contains(query) || p.FullName.Contains(query))
+            var result = _packageRepo.Get(p => string.IsNullOrEmpty(filter.Name)
+                                                || p.Name.Contains(filter.Name)
+                                                || p.FullName.Contains(filter.Name))
                 .ProjectTo<PackageInfoDto>(_mapper.ConfigurationProvider);
-            return await _paging.Paging(result, page);
+            return await _paging.Paging(result, filter);
         }
     }
 }

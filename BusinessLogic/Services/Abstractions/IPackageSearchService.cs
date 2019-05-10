@@ -7,6 +7,6 @@ namespace WhiteUnity.BusinessLogic.Abstractions
     {
         Task<PackageInfoDto> BestMatch(string name);
 
-        Task<PagingResultDto<PackageInfoDto>> Search(PageRequestDto page, string query);
+        Task<PagingResultDto<PackageInfoDto>> Search(PackageSearchRequestDto filter);
     }
 }

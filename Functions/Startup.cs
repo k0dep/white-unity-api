@@ -15,33 +15,32 @@ using WhiteUnity.BusinessLogic;
 using AutoMapper;
 using WhiteUnity.BusinessLogic.Abstractions;
 using WhiteUnity.BusinessLogic.Services;
+using Willezone.Azure.WebJobs.Extensions.DependencyInjection;
 
 [assembly: WebJobsStartup(typeof(Startup))]
-namespace WhiteUnity  
+namespace WhiteUnity
 {
     public class Startup : IWebJobsStartup
     {
         public void Configure(IWebJobsBuilder builder)
         {
-            var services = builder.Services;
+            var services = builder.AddDependencyInjection(ConfigureContainer);
+        }
 
-            services.AddSingleton<IMapper>(
+        private void ConfigureContainer(IServiceCollection services)
+        {
+            services.AddSingleton<IMapper>(ctx =>
                 new Mapper(new MapperConfiguration(cfg => cfg.AddProfile<WhiteUnityProfile>())));
 
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
-            services.AddScoped<IRepository<PackageModel>, EfRepository<PackageModel>>();
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
+            services.AddTransient<IRepository<PackageModel>, EfRepository<PackageModel>>();
 
-            services.AddScoped<IPagingService, PagingService>();
+            services.AddTransient<IPagingService, PagingService>();
 
-            services.AddScoped<IPackageSearchService>(ctx => {
-                var r = ctx.GetService<IRepository<PackageModel>>();
-                var m = ctx.GetService<IMapper>();
-                var p = ctx.GetService<IPagingService>();
+            services.AddTransient<IPackageSearchService, PackageSearchService>();
 
-                return new PackageSearchService(r, m, p);
-            });
-
-            services.AddDbContext<PackagesDbContext>(options => {
+            services.AddDbContext<PackagesDbContext>(options =>
+            {
                 var config = new ConfigurationBuilder()
                     .SetBasePath(Environment.CurrentDirectory)
                     .AddJsonFile("local.settings.json", optional: true, reloadOnChange: true)
@@ -52,7 +51,8 @@ namespace WhiteUnity
                 options.UseSqlServer(connectionString);
             });
 
-            services.AddScoped<DbContext>(ctx => ctx.GetService<PackagesDbContext>());
+            services.AddTransient<DbContext>(ctx => ctx.GetService<PackagesDbContext>());
+
         }
     }
 }
