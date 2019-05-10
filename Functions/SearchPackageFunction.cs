@@ -13,6 +13,7 @@ using WhiteUnity.BusinessLogic.Abstractions;
 using WhiteUnity.BusinessLogic;
 using WhiteUnity.BusinessLogic.Objects;
 using Willezone.Azure.WebJobs.Extensions.DependencyInjection;
+using WhiteUnity.Functions.Common;
 
 namespace k0dep.test1
 {
@@ -25,7 +26,7 @@ namespace k0dep.test1
             [Inject] IPackageSearchService packageSearch
         )
         {
-            var data = await req.Content.ReadAsAsync<PackageSearchRequestDto>();
+            var data = await req.GetData<PackageSearchRequestDto>();
             if(data == null)
             {
                 return new BadRequestObjectResult(new {
