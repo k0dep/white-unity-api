@@ -1,12 +1,14 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
+    <RootNamespace>WhiteUnity.BusinessLogic</RootNamespace>
   </PropertyGroup>
   
   <ItemGroup>
     <ProjectReference Include="..\DataAccess\DataAccess.csproj" />
     <PackageReference Include="AutoMapper" Version="8.0.0" />
+    <PackageReference Include="LibGit2Sharp" Version="0.26.0" />
   </ItemGroup>
 
 </Project>

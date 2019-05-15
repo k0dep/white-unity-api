@@ -30,7 +30,11 @@ namespace WhiteUnity
         private void ConfigureContainer(IServiceCollection services)
         {
             services.AddSingleton<IMapper>(ctx =>
-                new Mapper(new MapperConfiguration(cfg => cfg.AddProfile<WhiteUnityProfile>())));
+                new Mapper(new MapperConfiguration(cfg =>
+                {
+                    cfg.AddProfile<WhiteUnityProfile>();
+                    cfg.AddProfile<WhiteUnityProfile_Npm>();
+                })));
 
             services.AddTransient<IUnitOfWork, UnitOfWork>();
             services.AddTransient<IRepository<PackageModel>, EfRepository<PackageModel>>();
@@ -40,6 +44,7 @@ namespace WhiteUnity
             services.AddTransient<IPackageSearchService, PackageSearchService>();
             services.AddTransient<IPackageGlobalSearchService, PackageGlobalSearchService>();
             services.AddTransient<IPackageCreateService, PackageCreateService>();
+            services.AddTransient<INpmPackageInfoAccessService, NpmPackageInfoAccessService>();
 
             services.AddDbContext<PackagesDbContext>(options =>
             {

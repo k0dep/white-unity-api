@@ -35,7 +35,7 @@ namespace WhiteUnity.BusinessLogic.Services
         {
             var result = _packageRepo.Get(p => string.IsNullOrEmpty(filter.Name)
                                                 || p.Name.Contains(filter.Name)
-                                                || p.FullName.Contains(filter.Name))
+                                                || p.DisplayName.Contains(filter.Name))
                 .ProjectTo<PackageInfoDto>(_mapper.ConfigurationProvider);
             return await _paging.Paging(result, filter);
         }
