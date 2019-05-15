@@ -7,6 +7,10 @@ namespace DataAccess.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropColumn(
+                name: "FullName",
+                table: "Packages");
+
             migrationBuilder.AddColumn<string>(
                 name: "Category",
                 table: "Packages",
@@ -21,7 +25,8 @@ namespace DataAccess.Migrations
                 name: "DisplayName",
                 table: "Packages",
                 maxLength: 300,
-                nullable: true);
+                nullable: false,
+                defaultValue: "");
 
             migrationBuilder.AddColumn<string>(
                 name: "Unity",
@@ -86,6 +91,13 @@ namespace DataAccess.Migrations
             migrationBuilder.DropColumn(
                 name: "Version",
                 table: "Packages");
+
+            migrationBuilder.AddColumn<string>(
+                name: "FullName",
+                table: "Packages",
+                maxLength: 200,
+                nullable: false,
+                defaultValue: "");
         }
     }
 }
