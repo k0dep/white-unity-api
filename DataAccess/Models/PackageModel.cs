@@ -12,10 +12,10 @@ namespace WhiteUnity.DataAccess.Models
         [MaxLength(150)]
         [Required]
         public string Name { get; set; }
-
-        [MaxLength(200)]
+        
+        [MaxLength(300)]
         [Required]
-        public string FullName { get; set; }
+        public string DisplayName { get; set; }
 
         [MaxLength(250)]
         [Required]
@@ -24,9 +24,6 @@ namespace WhiteUnity.DataAccess.Models
         [MaxLength(250)]
         [Required]
         public string UrlForManifest { get; set; }
-
-        [MaxLength(300)]
-        public string DisplayName { get; set; }
 
         public string Description { get; set; }
 

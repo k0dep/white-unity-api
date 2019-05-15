@@ -10,7 +10,7 @@ using WhiteUnity.DataAccess.Context;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(PackagesDbContext))]
-    [Migration("20190515201728_ExtendedPackageModel")]
+    [Migration("20190515222224_ExtendedPackageModel")]
     partial class ExtendedPackageModel
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -55,11 +55,8 @@ namespace DataAccess.Migrations
                     b.Property<string>("Description");
 
                     b.Property<string>("DisplayName")
-                        .HasMaxLength(300);
-
-                    b.Property<string>("FullName")
                         .IsRequired()
-                        .HasMaxLength(200);
+                        .HasMaxLength(300);
 
                     b.Property<int>("LooksCount");
 

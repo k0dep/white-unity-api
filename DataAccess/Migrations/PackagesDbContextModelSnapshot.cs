@@ -53,11 +53,8 @@ namespace DataAccess.Migrations
                     b.Property<string>("Description");
 
                     b.Property<string>("DisplayName")
-                        .HasMaxLength(300);
-
-                    b.Property<string>("FullName")
                         .IsRequired()
-                        .HasMaxLength(200);
+                        .HasMaxLength(300);
 
                     b.Property<int>("LooksCount");
 
