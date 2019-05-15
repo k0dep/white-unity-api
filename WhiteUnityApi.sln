@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzureFunctionsTest", "Functions\AzureFunctionsTest.csproj", "{614290E0-E1B6-4E7D-BF83-2C266C8E9778}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccess", "DataAccess\DataAccess.csproj", "{658D0DCD-0F18-403D-8644-DABCF58D83DD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessLogic", "BusinessLogic\BusinessLogic.csproj", "{194FBBC7-E057-425B-9384-BF55A7BB39BE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{614290E0-E1B6-4E7D-BF83-2C266C8E9778}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{614290E0-E1B6-4E7D-BF83-2C266C8E9778}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{614290E0-E1B6-4E7D-BF83-2C266C8E9778}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{614290E0-E1B6-4E7D-BF83-2C266C8E9778}.Release|Any CPU.Build.0 = Release|Any CPU
+		{658D0DCD-0F18-403D-8644-DABCF58D83DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{658D0DCD-0F18-403D-8644-DABCF58D83DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{658D0DCD-0F18-403D-8644-DABCF58D83DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{658D0DCD-0F18-403D-8644-DABCF58D83DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{194FBBC7-E057-425B-9384-BF55A7BB39BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{194FBBC7-E057-425B-9384-BF55A7BB39BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{194FBBC7-E057-425B-9384-BF55A7BB39BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{194FBBC7-E057-425B-9384-BF55A7BB39BE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
