@@ -3,25 +3,39 @@ using System.Text;
 using System.Threading.Tasks;
 using LibGit2Sharp;
 using Newtonsoft.Json;
+using WhiteUnity.BusinessLogic.Abstractions;
 
-namespace WhiteUnity.BusinessLogic.Services.Abstractions
+namespace WhiteUnity.BusinessLogic
 {
     public class NpmPackageInfoAccessService : INpmPackageInfoAccessService
     {
-        public async Task<NpmPackageObject> TryGetPakcageInfo(string url)
+        public async Task<NpmPackageObject> TryGetPackageInfo(string url)
         {
             var tempDir = GetTemporaryDirectory();
             
             await Task.Run(() => Repository.Clone(url, tempDir)); //TODO: Обратотка ошибок
-
+            
+            string pakcageContent = null; 
             using (var repo = new Repository(tempDir))
             {
-                var blob = repo.Head.Tip["package.json"].Target as Blob;
+                var treeEntry = repo.Head.Tip["package.json"];
+
+                if (treeEntry == null)
+                {
+                    return null;
+                }
+                
+                var blob = treeEntry.Target as Blob;
                 using (var content = new StreamReader(blob.GetContentStream(), Encoding.UTF8))
                 {
-                    return JsonConvert.DeserializeObject<NpmPackageObject>(content.ReadToEnd());
+                    pakcageContent = content.ReadToEnd();
                 }
             }
+            
+            var packageObject = JsonConvert.DeserializeObject<NpmPackageObject>(pakcageContent);
+            Directory.Delete(tempDir, true);
+            
+            return packageObject;
         }
         
         private static string GetTemporaryDirectory()
