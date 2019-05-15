@@ -9,5 +9,18 @@ namespace WhiteUnity.BusinessLogic
         public string FullName { get; set; }
         public string ProjectUrl { get; set; }
         public string UrlForManifest { get; set; }
+        public string DisplayName { get; set; }
+
+        public string Description { get; set; }
+        public string Version { get; set; }
+
+        public string[] Dependencies { get; set; }
+
+        public string Category { get; set; }
+
+        public string[] Keywords { get; set; }
+
+        public string Unity { get; set; }
+
     }
 }

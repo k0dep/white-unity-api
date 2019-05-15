@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace WhiteUnity.BusinessLogic.Objects
+namespace WhiteUnity.BusinessLogic
 {
     public class NpmPackageObject
     {

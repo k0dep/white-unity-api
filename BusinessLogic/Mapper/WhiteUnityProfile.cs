@@ -9,6 +9,7 @@ namespace WhiteUnity.BusinessLogic
         {
             CreateMap<PackageInfoDto, PackageModel>();
             CreateMap<PackageModel, PackageInfoDto>();
+            CreateMap<NpmPackageObject, PackageModel>();
         }
     }
 }
