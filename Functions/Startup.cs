@@ -45,6 +45,7 @@ namespace WhiteUnity
             services.AddTransient<IPackageGlobalSearchService, PackageGlobalSearchService>();
             services.AddTransient<IPackageCreateService, PackageCreateService>();
             services.AddTransient<INpmPackageInfoAccessService, NpmPackageInfoAccessService>();
+            services.AddTransient<IPackageUpdateService, PackageUpdateService>();
 
             services.AddDbContext<PackagesDbContext>(options =>
             {

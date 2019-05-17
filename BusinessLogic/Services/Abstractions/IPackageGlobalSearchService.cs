@@ -7,6 +7,6 @@ namespace WhiteUnity.BusinessLogic.Abstractions
 {
     public interface IPackageGlobalSearchService
     {
-        Task<PackageInfoDto> GlobalSearch(string name);
+        Task<PackageInfoDto> GlobalSearch(string gitUrl);
     }
 }
