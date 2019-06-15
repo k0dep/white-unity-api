@@ -1,7 +1,7 @@
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using WhiteUnity.BusinessLogic.Abstractions;
-using WhiteUnity.BusinessLogic.Services;
 
 namespace WhiteUnity.BusinessLogic
 {
@@ -18,11 +18,13 @@ namespace WhiteUnity.BusinessLogic
 
         public async Task<PackageInfoDto> GlobalSearch(string gitUrl)
         {
-            var packageInfo = await _packageInfoAccess.TryGetPackageInfo(gitUrl);
+            var pakcageData = await _packageInfoAccess.TryGetPackageInfo(gitUrl);
+            var packageInfo = pakcageData.Info;
             var package = _mapper.Map<NpmPackageObject, PackageInfoDto>(packageInfo);
 
             package.ProjectUrl = gitUrl;
             package.UrlForManifest = gitUrl;
+            package.Versions = pakcageData.Branches.Union(pakcageData.Tags).ToArray();
 
             return package;
         }

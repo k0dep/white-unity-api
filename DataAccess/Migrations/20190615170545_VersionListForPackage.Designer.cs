@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WhiteUnity.DataAccess.Context;
 
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(PackagesDbContext))]
-    partial class PackagesDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190615170545_VersionListForPackage")]
+    partial class VersionListForPackage
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -29,7 +31,7 @@ namespace DataAccess.Migrations
                         .IsRequired()
                         .HasMaxLength(150);
 
-                    b.Property<int>("PackageModelId");
+                    b.Property<int?>("PackageModelId");
 
                     b.Property<string>("Version");
 
@@ -87,7 +89,7 @@ namespace DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("PackageModelId");
+                    b.Property<int?>("PackageModelId");
 
                     b.Property<string>("Version")
                         .IsRequired()
@@ -104,16 +106,14 @@ namespace DataAccess.Migrations
                 {
                     b.HasOne("WhiteUnity.DataAccess.Models.PackageModel")
                         .WithMany("Dependencies")
-                        .HasForeignKey("PackageModelId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("PackageModelId");
                 });
 
             modelBuilder.Entity("WhiteUnity.DataAccess.Models.PackageVersionModel", b =>
                 {
                     b.HasOne("WhiteUnity.DataAccess.Models.PackageModel")
                         .WithMany("Versions")
-                        .HasForeignKey("PackageModelId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("PackageModelId");
                 });
 #pragma warning restore 612, 618
         }
