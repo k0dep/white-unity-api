@@ -8,17 +8,20 @@ namespace WhiteUnity.BusinessLogic
     {
         public WhiteUnityProfile()
         {
-            CreateMap<PackageInfoDto, PackageModel>()
-                .ForMember(c => c.Dependencies,
-                    e => e.MapFrom(c => c.Dependencies.Select(s => new PackageDependencyModel()
-                    {
-                        Package = s,
-                        Version = "0.0.0"
-                    })));
+            CreateMap<PackageInfoDto, PackageModel>();
 
-            CreateMap<PackageModel, PackageInfoDto>()
-                .ForMember(c => c.Dependencies, e => e.MapFrom(d => d.Dependencies.Select(c => c.Package)));
+            CreateMap<PackageModel, PackageInfoDto>();
             
+            CreateMap<PackageVersionModel, string>()
+                .ConvertUsing(t => t.Version);
+            CreateMap<string, PackageVersionModel>()
+                .ForMember(t => t.Version, e => e.MapFrom(d => d));
+
+            CreateMap<PackageDependencyModel, string>()
+                .ConvertUsing(t => t.Package);
+            CreateMap<string, PackageDependencyModel>()
+                .ForMember(t => t.Version, e => e.MapFrom(d => "0.0.0"))
+                .ForMember(t => t.Package, e => e.MapFrom(d => d));
         }
     }
     
@@ -28,8 +31,7 @@ namespace WhiteUnity.BusinessLogic
         {
             SourceMemberNamingConvention = new PascalCaseNamingConvention();
             DestinationMemberNamingConvention = new PascalCaseNamingConvention();
-            CreateMap<NpmPackageObject, PackageInfoDto>()
-                .ForMember(c => c.Dependencies, e => e.MapFrom(c => c.dependencies.Select(s => s.Key).ToArray()));
+            CreateMap<NpmPackageObject, PackageInfoDto>();
         }
     }
 }
