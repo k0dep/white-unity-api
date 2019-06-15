@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel.Design;
 using WhiteUnity;
 using WhiteUnity.DataAccess.Context;
 using Microsoft.Azure.WebJobs;
@@ -13,6 +14,8 @@ using WhiteUnity.DataAccess.Models;
 using WhiteUnity.BusinessLogic.Abstraction;
 using WhiteUnity.BusinessLogic;
 using AutoMapper;
+using Microsoft.Azure.WebJobs.Logging;
+using Microsoft.Extensions.Logging;
 using WhiteUnity.BusinessLogic.Abstractions;
 using WhiteUnity.BusinessLogic.Services;
 using Willezone.Azure.WebJobs.Extensions.DependencyInjection;
@@ -24,10 +27,24 @@ namespace WhiteUnity
     {
         public void Configure(IWebJobsBuilder builder)
         {
-            var services = builder.AddDependencyInjection(ConfigureContainer);
+            builder.AddDependencyInjection<ServiceProviderBuilder>();
         }
+    }
 
-        private void ConfigureContainer(IServiceCollection services)
+    public class ServiceProviderBuilder : IServiceProviderBuilder
+    {
+        
+        private readonly ILoggerFactory _loggerFactory;
+
+        public ServiceProviderBuilder(ILoggerFactory loggerFactory) =>
+            _loggerFactory = loggerFactory;
+        
+        public IServiceProvider Build()
+        {
+            return ConfigureContainer(new ServiceCollection());
+        }
+        
+        private IServiceProvider ConfigureContainer(IServiceCollection services)
         {
             services.AddSingleton<IMapper>(ctx =>
                 new Mapper(new MapperConfiguration(cfg =>
@@ -58,6 +75,10 @@ namespace WhiteUnity
             services.AddTransient<DbContext>(ctx => ctx.GetService<PackagesDbContext>());
 
             services.AddTransient<IConfiguration>(ctx => GetConfig());
+            
+            services.AddSingleton<ILogger>(_ => _loggerFactory.CreateLogger(LogCategories.CreateFunctionUserCategory("Common")));
+
+            return services.BuildServiceProvider();
         }
 
         private IConfiguration GetConfig() => new ConfigurationBuilder()

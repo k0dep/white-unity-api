@@ -1,8 +1,11 @@
+using System;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using LibGit2Sharp;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using WhiteUnity.BusinessLogic.Abstractions;
 
@@ -10,6 +13,13 @@ namespace WhiteUnity.BusinessLogic
 {
     public class NpmPackageInfoAccessService : INpmPackageInfoAccessService
     {
+        public readonly ILogger Logger;
+
+        public NpmPackageInfoAccessService(ILogger logger)
+        {
+            Logger = logger;
+        }
+
         public async Task<PackageMetaInfo> TryGetPackageInfo(string url)
         {
             var tempDir = GetTemporaryDirectory();
@@ -48,11 +58,23 @@ namespace WhiteUnity.BusinessLogic
             }
             
             metaInfo.Info = JsonConvert.DeserializeObject<NpmPackageObject>(pakcageContent);
-            Directory.Delete(tempDir, true);
+            DeleteTempDir(tempDir);
 
             return metaInfo;
         }
-        
+
+        private void DeleteTempDir(string tempDir)
+        {
+            try
+            {
+                Directory.Delete(tempDir, true);
+            }
+            catch (Exception e)
+            {
+                Logger.LogWarning(e, $"Cant delete temp dir {tempDir}");
+            }
+        }
+
         private static string GetTemporaryDirectory()
         {
             var tempDirectory = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
