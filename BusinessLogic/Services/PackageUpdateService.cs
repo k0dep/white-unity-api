@@ -23,6 +23,7 @@ namespace WhiteUnity.BusinessLogic
         {
             var model = await _packageRepo.Get(p => p.Id == info.Id)
                 .Include(p => p.Dependencies)
+                .Include(p => p.Versions)
                 .SingleOrDefaultAsync();
 
             if (model == null)
@@ -31,6 +32,7 @@ namespace WhiteUnity.BusinessLogic
             }
 
             model.Dependencies = null;
+            model.Versions = null;
 
             _mapper.Map(info, model);
 

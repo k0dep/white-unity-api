@@ -10,5 +10,7 @@ namespace WhiteUnity.DataAccess.Models
         [MaxLength(150)]
         [Required]
         public string Version { get; set; }
+        
+        public int PackageModelId { get; set; }
     }
 }

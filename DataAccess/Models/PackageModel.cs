@@ -31,7 +31,7 @@ namespace WhiteUnity.DataAccess.Models
         [MaxLength(100)]
         public string Version { get; set; }
 
-        public IList<PackageDependencyModel> Dependencies { get; set; }
+        public ICollection<PackageDependencyModel> Dependencies { get; set; }
 
         public string Category { get; set; }
 
@@ -42,6 +42,6 @@ namespace WhiteUnity.DataAccess.Models
         
         public int LooksCount { get; set; }
 
-        public IList<PackageVersionModel> Versions { get; set; }
+        public ICollection<PackageVersionModel> Versions { get; set; }
     }
 }

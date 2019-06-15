@@ -1,4 +1,5 @@
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using LibGit2Sharp;
@@ -9,13 +10,24 @@ namespace WhiteUnity.BusinessLogic
 {
     public class NpmPackageInfoAccessService : INpmPackageInfoAccessService
     {
-        public async Task<NpmPackageObject> TryGetPackageInfo(string url)
+        public async Task<PackageMetaInfo> TryGetPackageInfo(string url)
         {
             var tempDir = GetTemporaryDirectory();
+
+            var cloneOptions = new CloneOptions()
+            {
+                IsBare = true,
+                FetchOptions = new FetchOptions
+                {
+                    TagFetchMode = TagFetchMode.All
+                }
+            };
             
-            await Task.Run(() => Repository.Clone(url, tempDir)); //TODO: Обратотка ошибок
+            await Task.Run(() => Repository.Clone(url, tempDir, cloneOptions)); //TODO: Обратотка ошибок
             
-            string pakcageContent = null; 
+            string pakcageContent = null;
+            var metaInfo = new PackageMetaInfo();
+            
             using (var repo = new Repository(tempDir))
             {
                 var treeEntry = repo.Head.Tip["package.json"];
@@ -30,12 +42,15 @@ namespace WhiteUnity.BusinessLogic
                 {
                     pakcageContent = content.ReadToEnd();
                 }
+
+                metaInfo.Branches = repo.Branches.Where(t => !t.IsRemote).Select(b => b.FriendlyName).ToArray();
+                metaInfo.Tags = repo.Tags.Select(b => b.FriendlyName).ToArray();
             }
             
-            var packageObject = JsonConvert.DeserializeObject<NpmPackageObject>(pakcageContent);
+            metaInfo.Info = JsonConvert.DeserializeObject<NpmPackageObject>(pakcageContent);
             Directory.Delete(tempDir, true);
-            
-            return packageObject;
+
+            return metaInfo;
         }
         
         private static string GetTemporaryDirectory()

@@ -12,5 +12,7 @@ namespace WhiteUnity.DataAccess.Models
         public string Package { get; set; }
         
         public string Version { get; set; }
+        
+        public int PackageModelId { get; set; }
     }
 }

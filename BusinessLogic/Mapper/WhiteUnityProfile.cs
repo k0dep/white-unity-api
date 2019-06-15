@@ -31,7 +31,9 @@ namespace WhiteUnity.BusinessLogic
         {
             SourceMemberNamingConvention = new PascalCaseNamingConvention();
             DestinationMemberNamingConvention = new PascalCaseNamingConvention();
-            CreateMap<NpmPackageObject, PackageInfoDto>();
+            CreateMap<NpmPackageObject, PackageInfoDto>()
+                .ForMember(t => t.Dependencies, s => s.MapFrom(e => e.dependencies.Keys))
+                .ForMember(t => t.Versions, e => e.Ignore());
         }
     }
 }
