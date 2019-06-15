@@ -23,5 +23,7 @@ namespace WhiteUnity.BusinessLogic
 
         public string Unity { get; set; }
 
+        public string[] Versions { get; set; }
+
     }
 }
