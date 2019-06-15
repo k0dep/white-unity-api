@@ -41,5 +41,7 @@ namespace WhiteUnity.DataAccess.Models
 
         
         public int LooksCount { get; set; }
+
+        public IList<PackageVersionModel> Versions { get; set; }
     }
 }
